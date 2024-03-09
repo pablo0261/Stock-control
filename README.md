@@ -1,1 +1,3 @@
 # Stock-control
+
+<AQUI COMENZAMOS LA APP DE CONTROL DE STOCK>
