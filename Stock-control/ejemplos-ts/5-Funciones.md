@@ -33,6 +33,8 @@ function saludar(nombre: string, mensaje: string = 'Hola') {
 }
 saludar('Juan'); // Hola Juan!
 saludar('María', 'Buenos días'); // Buenos días María!
+saludar(5, 'Buenos días'); // Buenos días María!
+
 ```
 
 En este ejemplo, el parámetro mensaje es opcional y tiene un valor por defecto 'Hola'.

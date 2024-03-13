@@ -9,11 +9,12 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "start": "node ./dist/index.js"
+    "start": "node ./src/main.tsx"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.1",
     "dotenv": "16.4.5",
+    "icecat": "^1.4.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-redux": "^9.1.0",
@@ -21,6 +22,7 @@
     "sass": "^1.71.1"
   },
   "devDependencies": {
+    "@types/node": "^20.11.26",
     "@types/react": "18.2.64",
     "@types/react-dom": "18.2.21",
     "@typescript-eslint/eslint-plugin": "7.1.1",
