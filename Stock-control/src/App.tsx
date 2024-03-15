@@ -10,6 +10,7 @@ function App() {
       <div>
       {/* <NavBar></NavBar> */}
         <main>
+          <h1>Hola mundo soy App!</h1>
           <Routes>
           {/* <Route exact path={helpers.Landing} element={<Landing />} /> */}
             <Route path={helpers.homeView} element={<HomeView/>}/> {/* agregar footer */}
