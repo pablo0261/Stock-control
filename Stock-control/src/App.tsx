@@ -1,10 +1,19 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import helpers from './helpers/routesFront'
 import HomeView from './views/homeView/homeView'
 import './App.module.sass'
 import LogIn from './views/logIn/LogIn'
+import { useEffect } from 'react'
 
 function App() {
+
+  const { pathname } = useLocation()
+
+  useEffect(()=>{
+    if (pathname === "/logIn") {
+      document.body.className = "access";
+   }
+  },[pathname])
 
   return (
     <>
