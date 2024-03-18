@@ -1,7 +1,8 @@
 import { Routes, Route } from 'react-router-dom'
 import helpers from './helpers/routesFront'
 import HomeView from './views/homeView/homeView'
-import './App.sass'
+import './App.module.sass'
+import LogIn from './views/logIn/LogIn'
 
 function App() {
 
@@ -10,10 +11,10 @@ function App() {
       <div>
       {/* <NavBar></NavBar> */}
         <main>
-          <h1>Hola mundo soy App!</h1>
           <Routes>
-          {/* <Route exact path={helpers.Landing} element={<Landing />} /> */}
+            {/* <Route exact path={helpers.Landing} element={<Landing />} /> */}
             <Route path={helpers.homeView} element={<HomeView/>}/> {/* agregar footer */}
+            <Route path={helpers.logIn} element={<LogIn />}/>
             {/* <Route path={helpers.dailyFlow} element={<dailyFlow/>} />
             <Route path={helpers.dasboardView} element={<dasboardView/>}/>
             <Route path={helpers.FAQs} element={<FAQs />} /> */}

@@ -1,6 +1,6 @@
 const helpers = {
     Landing : "/",
-    AccessAccount : "/accessAccount",
+    logIn : "/logIn",
 
     homeView: "/homeView",
     dailyFlow: "/dailyFlow",
