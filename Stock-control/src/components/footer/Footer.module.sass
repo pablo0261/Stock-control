@@ -1,0 +1,15 @@
+@use '../../style/Mixins'
+@import '../../style/Variables'
+
+.wrapper 
+    width: 100%
+    height: 100%
+    @include Mixins.flexbox(row, flex-start, center)
+    gap: 20px
+
+    .link
+        @include Mixins.fontGrotesqueNormal($secondaryColor, 15px)
+        opacity: .5
+        text-decoration: none
+        
+    

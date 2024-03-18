@@ -1,11 +1,9 @@
 const helpers = {
-    Landing : "/",
-    logIn : "/logIn",
-
+    Landing: "/",
+    logIn: "/logIn",
+    signIn: "/signIn",
     homeView: "/homeView",
-    dailyFlow: "/dailyFlow",
-    dasboardView: "/dasboardView",
-   
+
     /* Footer */
     FAQs: "/frequently-asked-questions",
 }
