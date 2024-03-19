@@ -1,8 +1,7 @@
 
-import style from "./SignIn.sass";
+import style from "./SignIn.module.sass";
 // import Swal from "sweetalert2";
 import {useForm} from "../../../hooks/useForm"
-
 
 interface sigInData {
 fullName: string,
