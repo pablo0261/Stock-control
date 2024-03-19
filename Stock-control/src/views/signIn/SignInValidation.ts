@@ -1,6 +1,11 @@
 import * as yup from 'yup';
 
-const loginValidationSchema = yup.object().shape({
+const SignInValidationSchema = yup.object().shape({
+    fullname: yup
+        .string()
+        .min(1, "El nombre tiene que tener al menos un carácter")
+        .max(100, "El nombre no puede superar los 100 carácteres")
+        .required("El campo nombre es obligatorio"),
     email: yup
         .string()
         .email('Ingrese un email valido')
@@ -12,4 +17,4 @@ const loginValidationSchema = yup.object().shape({
         .required('Campo obligatorio')
 })
 
-export default loginValidationSchema
+export default SignInValidationSchema
