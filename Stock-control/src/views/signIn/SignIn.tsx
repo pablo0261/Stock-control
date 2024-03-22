@@ -47,13 +47,21 @@ export const SignIn: FunctionComponent<GoogleSignInComponentProps> = ({
     setLoginFailed(false); 
   };
 
-  const handleLoginSuccess = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
-    loginSuccess(response);
-  };
+  // const handleLoginSuccess = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
+  //   loginSuccess(response);
+  // };
 
-  const handleLoginFailure = () => {
-    setLoginFailed(true);
-  };
+  // const handleLoginFailure = () => {
+  //   setLoginFailed(true);
+  // };
+
+  // const responseGoogle = (response) => {
+  //   console.log(response);
+  // }
+
+  const responseGoogle = (response) => {
+    console.log(response);
+  }
 
   return (
     <div className={style.background}>
@@ -112,16 +120,14 @@ export const SignIn: FunctionComponent<GoogleSignInComponentProps> = ({
                 <GoogleLogin
               clientId={CLIENT_ID}
               buttonText="Google"
-              onSuccess={handleLoginSuccess}
-              onFailure={handleLoginFailure}
-              onClick={handleGoogleLogin}
-              cookiePolicy="single_host_origin"
-              responseType="code,token"
+              onSuccess={responseGoogle}
+              onFailure={responseGoogle}
+              cookiePolicy={'single_host_origin'}
             />
               </div>
-              <button className={style.facebook}>
+              <div className={style.facebook}>
                 Facebook
-              </button>
+              </div>
             </div>
           </div>
           <div className={style.questionWrapper}>

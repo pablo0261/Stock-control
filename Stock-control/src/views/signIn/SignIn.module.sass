@@ -9,6 +9,7 @@
     height: fit-content
 
     .marginContainer
+        
         width: 95%
         height: 100vh
         @include Mixins.flexbox(column, center, center)
@@ -45,11 +46,12 @@
             @include Mixins.flexbox(column, center, center)
 
             .form
-                width: 30%
+                width: 30vw
+                min-width: 350px
                 height: fit-content
                 @include Mixins.flexbox(column, center, center)
                 @include Mixins.boxShadowGradient($primaryColor, 1px, $accentColor, $primaryColor)
-
+                
                 .titleForm
                     @include Mixins.fontGrotesqueBold($secondaryColor, 25px)
 
