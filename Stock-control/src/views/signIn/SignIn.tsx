@@ -1,18 +1,30 @@
-import { Form, Formik } from "formik";
-import FormikInput from "../../components/formik/FormikInput.js";
-import SigninValidationSchema from "./SignInValidation.js";
-import { Link } from "react-router-dom";
-import helpers from "../../helpers/routesFront.js";
-import Footer from "../../components/footer/Footer.js";
-import style from "./SignIn.module.sass";
+import { FunctionComponent, useState } from 'react';
+import { Form, Formik } from 'formik';
+import FormikInput from '../../components/formik/FormikInput';
+import SigninValidationSchema from './SignInValidation';
+import { Link } from 'react-router-dom';
+import helpers from '../../helpers/routesFront';
+import Footer from '../../components/footer/Footer';
+import style from './SignIn.module.sass';
 import {
   GoogleLogin,
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
-} from "react-google-login";
-import decodeJwt from "../../../utils/decodeJwt.js";
-import { useState } from "react";
+} from '@leecheuk/react-google-login';
+
 const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
+
+interface GoogleSignInComponentProps {
+  loginSuccess: (
+    response: GoogleLoginResponse | GoogleLoginResponseOffline
+  ) => void;
+}
+
+interface CustomGoogleButtonProps {
+  onClick: () => void;
+  loginSuccess: (response: GoogleLoginResponse | GoogleLoginResponseOffline) => void;
+  loginFailure: () => void;
+}
 
 interface FormLogIn {
   fullName: string;
@@ -21,28 +33,27 @@ interface FormLogIn {
 }
 
 const initialValues: FormLogIn = {
-  fullName: "",
-  email: "",
-  password: "",
+  fullName: '',
+  email: '',
+  password: '',
 };
 
-function SignIn() {
-  const [email, setEmail] = useState<string | null>(null);
+export const SignIn: FunctionComponent<GoogleSignInComponentProps> = ({
+  loginSuccess,
+}) => {
+  const [loginFailed, setLoginFailed] = useState<boolean>(false);
 
-  function handleError() {
-    alert("Usuario o contraseña incorrectos");
-  }
+  const handleGoogleLogin = () => {
+    setLoginFailed(false); 
+  };
 
-  function handleSuccess(
-    response: GoogleLoginResponse | GoogleLoginResponseOffline
-  ) {
-    console.log("Credentialresponse", response);
-    if ("credential" in response && typeof response.credential === "string") {
-      const { payload } = decodeJwt(response.credential);
-      console.log("payload credential", payload);
-      setEmail(payload.email);
-    }
-  }
+  const handleLoginSuccess = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
+    loginSuccess(response);
+  };
+
+  const handleLoginFailure = () => {
+    setLoginFailed(true);
+  };
 
   return (
     <div className={style.background}>
@@ -52,8 +63,7 @@ function SignIn() {
         </div>
         <div className={style.quoteWrapper}>
           <h2 className={style.quote}>
-            “Tu inventario, tu <span className={style.strong}>control</span>{" "}
-            total”
+            “Tu inventario, tu <span className={style.strong}>control</span> total”
           </h2>
           <h3 className={style.slogan}>
             Simplificando la gestión de stock para tu éxito.
@@ -67,67 +77,68 @@ function SignIn() {
               onSubmit={(values) => console.log(values)}
               validationSchema={SigninValidationSchema}
             >
-              {() => {
-                return (
-                  <Form className={style.formik}>
-                    <FormikInput
-                      name="fullName"
-                      label="Nombre"
-                      placeholder="Nombre  y Apellido"
-                    ></FormikInput>
-                    <FormikInput
-                      name="email"
-                      label="Email"
-                      placeholder="example@mail.com"
-                    ></FormikInput>
-                    <FormikInput
-                      name="password"
-                      label="Contraseña"
-                      placeholder="********"
-                      securetextentry="true"
-                    ></FormikInput>
-                    <button type="submit" className={style.submitBtn}>
-                      Ingresar
-                    </button>
-                  </Form>
-                );
-              }}
+              {() => (
+                <Form className={style.formik}>
+                  <FormikInput
+                    name="fullName"
+                    label="Nombre"
+                    placeholder="Nombre y Apellido"
+                  />
+                  <FormikInput
+                    name="email"
+                    label="Email"
+                    placeholder="example@mail.com"
+                  />
+                  <FormikInput
+                    name="password"
+                    label="Contraseña"
+                    placeholder="********"
+                    securetextentry="true"
+                  />
+                  <button type="submit" className={style.submitBtn}>
+                    Ingresar
+                  </button>
+                </Form>
+              )}
             </Formik>
             <div className={style.separator}>
               <div className={style.line}></div>
               <div className={style.letter}>o</div>
               <div className={style.line}></div>
             </div>
+                {loginFailed && <p>Could not sign you in! Try again</p>}
             <div className={style.socialApps}>
               <div className={style.google}>
-                {email === null && (
-                  <GoogleLogin
-                    clientId={CLIENT_ID}
-                    onFailure={handleError}
-                    onSuccess={handleSuccess}
-                  />
-                )}
-                {email && <p>El usuario a iniciado seción: {email}</p>}
+                <GoogleLogin
+              clientId={CLIENT_ID}
+              buttonText="Google"
+              onSuccess={handleLoginSuccess}
+              onFailure={handleLoginFailure}
+              onClick={handleGoogleLogin}
+              cookiePolicy="single_host_origin"
+              responseType="code,token"
+            />
               </div>
-              <div className={style.facebook}>Facebook</div>
+              <button className={style.facebook}>
+                Facebook
+              </button>
             </div>
           </div>
           <div className={style.questionWrapper}>
             <p className={style.question}>
               ¿Ya tienes una cuenta?
               <Link to={helpers.logIn} className={style.link}>
-                {" "}
                 Ingresar
-              </Link>{" "}
+              </Link>
             </p>
           </div>
         </div>
         <div className={style.footerWrapper}>
-          <Footer></Footer>
+          <Footer />
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default SignIn;

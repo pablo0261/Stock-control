@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route, useLocation} from 'react-router-dom'
 import helpers from './helpers/routesFront'
 import HomeView from './views/homeView/homeView'
 import './App.module.sass'
@@ -9,8 +9,9 @@ import SignIn from './views/signIn/SignIn'
 import { useEffect } from 'react'
 
 function App() {
-
   const { pathname } = useLocation()
+
+
 
   useEffect(()=>{
     if (pathname === "/") {
@@ -45,3 +46,4 @@ function App() {
 }
 
 export default App
+
