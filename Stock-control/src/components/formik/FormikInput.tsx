@@ -5,7 +5,7 @@ interface FormikInputProps {
     name: string,
     label: string,
     placeholder?: string,
-    securetextentry?: boolean
+    securetextentry?: string
 }
 
 function FormikInput({ name, ...props }: FormikInputProps) {
@@ -21,7 +21,7 @@ function FormikInput({ name, ...props }: FormikInputProps) {
         <div className={style.wrapper}>
             <label className={style.label}>{props.label}:</label> 
             <input
-                type={props.securetextentry ? 'password' :'text'}
+                type={props.securetextentry === 'true' ? 'password' :'text'}
                 value={field.value || ''}
                 onChange={handleChange}
                 {...props}

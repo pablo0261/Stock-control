@@ -9,6 +9,7 @@
     height: fit-content
 
     .marginContainer
+        
         width: 95%
         height: 100vh
         @include Mixins.flexbox(column, center, center)
@@ -45,11 +46,12 @@
             @include Mixins.flexbox(column, center, center)
 
             .form
-                width: 30%
+                width: 30vw
+                min-width: 350px
                 height: fit-content
                 @include Mixins.flexbox(column, center, center)
                 @include Mixins.boxShadowGradient($primaryColor, 1px, $accentColor, $primaryColor)
-
+                
                 .titleForm
                     @include Mixins.fontGrotesqueBold($secondaryColor, 25px)
 
@@ -75,7 +77,7 @@
                         width: 45%
                         height: 1px
                         background-color: $secondaryColor
-                    
+
                     .letter
                         @include Mixins.fontGrotesqueNormal($secondaryColor, 20px)
 
@@ -92,7 +94,7 @@
                         box-sizing: border-box
                         background-color: #4183F3
                         @include Mixins.fontGrotesqueSemibold($primaryColor, 20px)
-                    
+
                     .facebook
                         width: 47%
                         padding: 5px
@@ -111,16 +113,15 @@
 
                     .link
                         @include Mixins.fontGrotesqueSemibold($secondaryColor, 16px)
-                        text-decoration: underline 
+                        text-decoration: underline
                         text-decoration-color: transparent
                         text-decoration-thickness: 2px
                         transition: .1s
 
                     .link:hover
-                        text-decoration: underline 
+                        text-decoration: underline
                         text-decoration-color: $accentColor
                         text-decoration-thickness: 2px
-
 
         .footerWrapper
             width: 100%

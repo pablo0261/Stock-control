@@ -1,24 +1,67 @@
-import { Form, Formik } from 'formik'
-import FormikInput from '../../components/formik/FormikInput.js'
-import SigninValidationSchema from './SignInValidation.js'
-import { Link } from 'react-router-dom'
-import helpers from '../../helpers/routesFront.js'
-import Footer from '../../components/footer/Footer.js'
-import style from './SignIn.module.sass'
+import { FunctionComponent, useState } from 'react';
+import { Form, Formik } from 'formik';
+import FormikInput from '../../components/formik/FormikInput';
+import SigninValidationSchema from './SignInValidation';
+import { Link } from 'react-router-dom';
+import helpers from '../../helpers/routesFront';
+import Footer from '../../components/footer/Footer';
+import style from './SignIn.module.sass';
+import {
+  GoogleLogin,
+  GoogleLoginResponse,
+  GoogleLoginResponseOffline,
+} from '@leecheuk/react-google-login';
+
+const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
+
+interface GoogleSignInComponentProps {
+  loginSuccess: (
+    response: GoogleLoginResponse | GoogleLoginResponseOffline
+  ) => void;
+}
+
+interface CustomGoogleButtonProps {
+  onClick: () => void;
+  loginSuccess: (response: GoogleLoginResponse | GoogleLoginResponseOffline) => void;
+  loginFailure: () => void;
+}
 
 interface FormLogIn {
-  fullName: string,
-  email: string,
-  password: string
+  fullName: string;
+  email: string;
+  password: string;
 }
 
 const initialValues: FormLogIn = {
   fullName: '',
   email: '',
-  password: ''
-}
+  password: '',
+};
 
-function LogIn() {
+export const SignIn: FunctionComponent<GoogleSignInComponentProps> = ({
+  loginSuccess,
+}) => {
+  const [loginFailed, setLoginFailed] = useState<boolean>(false);
+
+  const handleGoogleLogin = () => {
+    setLoginFailed(false); 
+  };
+
+  // const handleLoginSuccess = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
+  //   loginSuccess(response);
+  // };
+
+  // const handleLoginFailure = () => {
+  //   setLoginFailed(true);
+  // };
+
+  // const responseGoogle = (response) => {
+  //   console.log(response);
+  // }
+
+  const responseGoogle = (response) => {
+    console.log(response);
+  }
 
   return (
     <div className={style.background}>
@@ -27,8 +70,12 @@ function LogIn() {
           <h1 className={style.logo}>MyStockify</h1>
         </div>
         <div className={style.quoteWrapper}>
-          <h2 className={style.quote}>“Tu inventario, tu <span className={style.strong}>control</span> total”</h2>
-          <h3 className={style.slogan}>Simplificando la gestión de stock para tu éxito.</h3>
+          <h2 className={style.quote}>
+            “Tu inventario, tu <span className={style.strong}>control</span> total”
+          </h2>
+          <h3 className={style.slogan}>
+            Simplificando la gestión de stock para tu éxito.
+          </h3>
         </div>
         <div className={style.logInWrapper}>
           <div className={style.form}>
@@ -38,52 +85,66 @@ function LogIn() {
               onSubmit={(values) => console.log(values)}
               validationSchema={SigninValidationSchema}
             >
-              {() => {
-                return (
-                  <Form
-                    className={style.formik}
-                  >
-                    <FormikInput
-                      name='fullName'
-                      label='Nombre'
-                      placeholder='Nombre  y Apellido'
-                    ></FormikInput>
-                    <FormikInput
-                      name='email'
-                      label='Email'
-                      placeholder='example@mail.com'
-                    ></FormikInput>
-                    <FormikInput
-                      name='password'
-                      label='Contraseña'
-                      placeholder='********'
-                      securetextentry
-                    ></FormikInput>
-                    <button type='submit' className={style.submitBtn}>Ingresar</button>
-                  </Form>
-                )
-              }}
+              {() => (
+                <Form className={style.formik}>
+                  <FormikInput
+                    name="fullName"
+                    label="Nombre"
+                    placeholder="Nombre y Apellido"
+                  />
+                  <FormikInput
+                    name="email"
+                    label="Email"
+                    placeholder="example@mail.com"
+                  />
+                  <FormikInput
+                    name="password"
+                    label="Contraseña"
+                    placeholder="********"
+                    securetextentry="true"
+                  />
+                  <button type="submit" className={style.submitBtn}>
+                    Ingresar
+                  </button>
+                </Form>
+              )}
             </Formik>
             <div className={style.separator}>
               <div className={style.line}></div>
               <div className={style.letter}>o</div>
               <div className={style.line}></div>
             </div>
+                {loginFailed && <p>Could not sign you in! Try again</p>}
             <div className={style.socialApps}>
-              <div className={style.google}>Google</div>
-              <div className={style.facebook}>Facebook</div>
+              <div className={style.google}>
+                <GoogleLogin
+              clientId={CLIENT_ID}
+              buttonText="Google"
+              onSuccess={responseGoogle}
+              onFailure={responseGoogle}
+              cookiePolicy={'single_host_origin'}
+            />
+              </div>
+              <div className={style.facebook}>
+                Facebook
+              </div>
             </div>
           </div>
           <div className={style.questionWrapper}>
-            <p className={style.question}>¿Ya tienes una cuenta?<Link to={helpers.logIn} className={style.link}> Ingresar</Link> </p>
+            <p className={style.question}>
+              ¿Ya tienes una cuenta?
+              <Link to={helpers.logIn} className={style.link}>
+                Ingresar
+              </Link>
+            </p>
           </div>
         </div>
         <div className={style.footerWrapper}>
-          <Footer></Footer>
+          <Footer />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LogIn
+export default SignIn;

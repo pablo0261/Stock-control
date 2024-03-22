@@ -16,6 +16,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "outDir": "stock-control/dist",
+    "rootDir": "./src",
 
     /* Linting */
     "strict": true,
